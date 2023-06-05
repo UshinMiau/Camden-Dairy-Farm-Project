@@ -7,7 +7,7 @@
     use APP\Model\Uteis;
     use APP\Model\Validation;
     use APP\Model\ProductModel;
-use APP\model\Validation as ModelValidation;
+    use APP\Model\DAO\ProductDAO;
 
     session_start();
 
@@ -50,7 +50,11 @@ use APP\model\Validation as ModelValidation;
         if(!Validation::validateComments($comments))
             array_push($error, 'Invalid comment, the comment can only have up to 45 characters.');
 
-        // todo: validar preços (priceOfSale && productionCost)
+        if(!Validation::validatePrice($priceOfSale))
+            array_push($error, "Invalid price of sale.");
+        
+        if(!Validation::validatePrice($productionCost))
+            array_push($error, "Invalid price of production cost.");
 
         if($error)
             Uteis::redirect(message: $error, session_name: 'msg_error_validation');
@@ -65,11 +69,14 @@ use APP\model\Validation as ModelValidation;
             comments: $comments
         );
 
-        // TODO: cadastrar no banco
-
+        $result = ProductDAO::register($product);
+        
+        if($result) {
+            Uteis::redirect(message: 'Product successfully registered!!', session_name: 'msg_confirm');
+        }
+        else {
+            Uteis::redirect(message: 'Sorry, it was not possible to register the product!!');
+        }
     }
-
-
-
 
 ?>

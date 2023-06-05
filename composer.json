@@ -1,9 +1,12 @@
 {
-  "name": "candem/dairyhighlights",
-  "autoload": {
-    "psr-4": {
-      "APP\\": "src/"
-    }
-  },
-  "require": {}
+    "name": "candem/dairyhighlights",
+    "autoload": {
+        "psr-4": {
+            "APP\\": "src/"
+        },
+        "files": [
+            "config.php"
+        ]
+    },
+    "require": {}
 }

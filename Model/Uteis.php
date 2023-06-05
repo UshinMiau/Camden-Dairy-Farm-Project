@@ -8,10 +8,6 @@
             header("location:$url");
             die;
         }
-
-        public static function formatDate($date) {
-            
-        }
     }
 
 ?>

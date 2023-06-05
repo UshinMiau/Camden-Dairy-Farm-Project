@@ -16,6 +16,14 @@
                 return true;
             }
         }
+        
+        public static function validatePrice($price) {
+            return preg_match("/^\d{1,3}(?:\.\d{3})*(?:,\d{2})?$/", $price);
+        }
+
+        public static function validateUsernameAndPassword($usernameOrPassword) {
+            return preg_match("/^(?=.*\d)(?=.*[#$@!%&*?\.\/])[A-Za-z\d#$@!%&*?\.\/]{8,}$/", $usernameOrPassword);
+        }
 
         public static function validateString($string) {
             return preg_match("/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/u", $string);
