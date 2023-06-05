@@ -11,7 +11,7 @@
 
         public static function sign_up(ClientModel $client) {
             self::$connection = Connection::getConnection();
-            $sql = "INSERT INTO client (id_client, full_name, phone_number, address_of_shipping) VALUES ('" . $client->clientId . "', '" . $client->fullName . "', '" . $client->phoneNumber . "', '" . $client->addressOfShipping . "')";
+            $sql = "INSERT INTO client (id_client, fullname, phone_number, address_id) VALUES ('" . $client->clientId . "', '" . $client->fullName . "', '" . $client->phoneNumber . "', '" . $client->addressOfShipping . "')";
             $statement = self::$connection->prepare($sql);
         
             return $statement->execute();
@@ -54,7 +54,7 @@
         
         public static function update(ClientModel $client) {
             self::$connection = Connection::getConnection();
-            $sql = "UPDATE client SET full_name = '" . $client->fullName . "', phone_number = '" . $client->phoneNumber . "', address_of_shipping = '" . $client->addressOfShipping . "' WHERE id_client = '" . $client->clientId . "'";
+            $sql = "UPDATE client SET fullname = '" . $client->fullName . "', phone_number = '" . $client->phoneNumber . "', address_id = '" . $client->addressOfShipping . "' WHERE id_client = '" . $client->clientId . "'";
             $statement = self::$connection->prepare($sql);
         
             return $statement->execute();
