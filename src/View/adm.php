@@ -63,10 +63,20 @@
     </header>
 
     <main>
-
+        <div class="container w-50 vh-100 d-flex flex-column justify-content-center align-content-center">
+            <div class="d-flex flex-column justify-content-center align-items-center card p-5 shadow">
+                <h1 class="text-center my-4">Admin Panel</h1>
+                <div>
+                    <a class="btn btn-block btn-primary" href="add_product.php">
+                        <i class="bi bi-plus"></i> Add Product
+                    </a>
+                    <a class="btn btn-block btn-danger" href="../Controller/Login.php?operation=sign_out">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
     </main>
-
-    <!-- TODO: SCRIPT PARA VALIDAR -->
 </body>
 
 </html>

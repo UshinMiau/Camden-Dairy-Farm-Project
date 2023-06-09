@@ -58,7 +58,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
+                    <li class="nav-item">
                             <?php
                                 if(!$login):
                             ?>
@@ -66,19 +66,20 @@
                                     <i class="bi bi-person"></i> Login
                                 </a>
                             <?php
-                                endif;
-                                if(isset($_SESSION['adm'])):
-                            ?>
-                                <a class="nav-link" href="adm.php">
-                                    <i class="bi bi-person"></i> Adm Panel
-                                </a>
-                            <?php
                                 else:
+                                    if(isset($_SESSION['adm'])):
                             ?>
-                                <a class="nav-link" href="client.php">
-                                    <i class="bi bi-person"></i> Client Panel
-                                </a>
+                                    <a class="nav-link" href="adm.php">
+                                        <i class="bi bi-person"></i> Adm Panel
+                                    </a>
+                                <?php
+                                    else:
+                                ?>
+                                    <a class="nav-link" href="client.php">
+                                        <i class="bi bi-person"></i> Client Panel
+                                    </a>
                             <?php
+                                endif;
                                 endif;
                             ?>
                         </li>
@@ -113,15 +114,13 @@
                 <form method="POST" action="../Controller/Products.php?operation=add_cart&&product=<?= base64_encode(serialize($product)) ?>">
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Amount:</label>
-                        <input type="number" id="quantity" name="quantity" class="form-control" min="1" max="10" value="1">
+                        <input type="number" id="quantity" name="quantity" class="form-control" min="1" value="1">
                     </div>
                     <button type="submit" class="btn btn-primary">Add</button>
                 </form>
             </div>
         </div>
     </main>    
-
-    <!-- Restante do conteúdo da página -->
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js"

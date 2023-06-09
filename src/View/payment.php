@@ -2,11 +2,16 @@
 
     session_start();
 
-    if (!isset($_SESSION['adm']) || !isset($_SESSION['client'])) {
+    if ((!isset($_SESSION['adm']) || !isset($_SESSION['client'])) && !isset($_SESSION['data_pay'])) {
         header('location: ../../index.php');
         die;
     }
+    else {
+        require_once '../Model/PaymentModel.php';
 
+        $data_pay = unserialize($_SESSION['data_pay']);
+    }
+    
 ?>
 
 <!DOCTYPE html>
@@ -76,9 +81,30 @@
             </div>
         </nav>
     </header>
+    
+    <br>
 
-    <main>
-        
+    <main class="d-flex justify-content-center align-items-center">
+        <div class="card shadow container w-50">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                <form method="POST" action="../Controller/Payment.php?operation=register_pay&&summary=<?= base64_encode(serialize($data_pay)) ?>">
+                    <h2 class="card-title">Payment Summary</h2>
+                    <div class="item-info">
+                        <h5>Payment id: <?= $data_pay->paymentId ?></h5>
+                        <h5>Total items: <?= $data_pay->totalQuantityCart ?></h5>
+                        <h5>Payment date: <?= $data_pay->paymentDate ?></h5>
+                        <h5>Price without discount: <?= $data_pay->totalPriceWithoutDiscount ?></h5>
+                        <h5>Discount percentage: <?= $data_pay->quotationDiscountValue . '%' ?></h5>
+                        <h5>Price with discount: <?= $data_pay->totalPriceWithDiscount ?></h5>
+                        <h5>Payment method: <?= $data_pay->paymentMethod ?></h5>
+                    </div>
+
+                    <br>
+                    
+                    <button type="submit" class="btn btn-primary checkout-btn mx-auto d-block">Register Pay</button>
+                </form>
+            </div>
+        </div>
     </main>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>

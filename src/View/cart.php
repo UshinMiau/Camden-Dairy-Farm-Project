@@ -91,27 +91,28 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
+                    <li class="nav-item">
                             <?php
                                 if(!$login):
                             ?>
-                                <a class="nav-link" href="src/View/login.php">
+                                <a class="nav-link" href="login.php">
                                     <i class="bi bi-person"></i> Login
                                 </a>
                             <?php
-                                endif;
-                                if(isset($_SESSION['adm'])):
-                            ?>
-                                <a class="nav-link" href="adm.php">
-                                    <i class="bi bi-person"></i> Adm Panel
-                                </a>
-                            <?php
                                 else:
+                                    if(isset($_SESSION['adm'])):
                             ?>
-                                <a class="nav-link" href="client.php">
-                                    <i class="bi bi-person"></i> Client Panel
-                                </a>
+                                    <a class="nav-link" href="adm.php">
+                                        <i class="bi bi-person"></i> Adm Panel
+                                    </a>
+                                <?php
+                                    else:
+                                ?>
+                                    <a class="nav-link" href="client.php">
+                                        <i class="bi bi-person"></i> Client Panel
+                                    </a>
                             <?php
+                                endif;
                                 endif;
                             ?>
                         </li>
@@ -129,84 +130,99 @@
     <br>
 
     <main class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="https://static.itdg.com.br/images/auto-auto/24a86867b6ccec0e6863ddbce24c97b1/tipos-de-leite-de-vaca.jpg" alt="Item 1" class="card-img-top" style="max-height: 140px; object-fit: contain;">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h3 class="card-title">Item 1</h3>
-                            <p class="card-text">Price: $10</p>
-                            <p class="card-text">Quantity: 2</p>
+        <div class="row">
+            <div class="col-md-8">
+                <?php
+                    if(!isset($_SESSION['cart'])):
+                ?>
+
+                    <h2>Empty shopping cart!</h2>
+
+                <?php
+                    else:
+                        foreach($_SESSION['cart'] as $item):
+                            $name = $item['product']['name'];
+                            $quantity = $item['quantity'];
+                            $price = $item['product']['price_of_sale'];
+                            $totalPrice = $price * $quantity;
+
+                            if(!isset($totalPriceCart) && !isset($totalQuantityCart)) {
+                                $totalPriceCart = $totalPrice;
+                                $totalQuantityCart = $quantity;
+                            }
+                            else {
+                                $totalPriceCart = $totalPriceCart + $totalPrice;
+                                $totalQuantityCart = $totalQuantityCart + $quantity;
+                            }
+                ?>
+                        <div class="card mb-3">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="imgs/img.png" alt="" class="card-img-top" style="max-height: 140px; object-fit: contain;">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h3 class="card-title"><?= $name ?></h3>
+                                        <p class="card-text">Price: $<?= $price ?></p>
+                                        <p class="card-text">Quantity: <?= $quantity ?></p>
+                                        <p class="card-text">Total price: $<?= $totalPrice ?></p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                <?php
+                    endforeach;
+                ?>
+                    <a class="btn btn-block btn-danger" href="../Controller/clear_cart.php">
+                        <i class="bi bi-trash"></i> Clear
+                    </a>
+                <?php
+                    endif;
+                ?>
             </div>
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="https://static.itdg.com.br/images/auto-auto/24a86867b6ccec0e6863ddbce24c97b1/tipos-de-leite-de-vaca.jpg" alt="Item 2" class="card-img-top" style="max-height: 140px; object-fit: contain;">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h3 class="card-title">Item 2</h3>
-                            <p class="card-text">Price: $20</p>
-                            <p class="card-text">Quantity: 1</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="https://static.itdg.com.br/images/auto-auto/24a86867b6ccec0e6863ddbce24c97b1/tipos-de-leite-de-vaca.jpg" alt="Item 3" class="card-img-top" style="max-height: 140px; object-fit: contain;">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h3 class="card-title">Item 3</h3>
-                            <p class="card-text">Price: $15</p>
-                            <p class="card-text">Quantity: 3</p>
-                        </div>
+
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <form method="POST" action="../Controller/Payment.php?operation=pay">
+                            <h2 class="card-title">Cart Summary</h2>
+                            <div class="item-info">
+                            <?php
+                                if(!isset($_SESSION['cart'])):
+                            ?>
+                                <h5>Empty shopping cart!</h5>
+                            <?php
+                                else:
+                            ?>
+                                <h5>Total Items: <?= $totalQuantityCart ?></h5>
+                                <h5>Total Price: $<?= $totalPriceCart ?></h5>
+                            </div>
+                            <?php
+                                endif;
+                                if(!$login):
+                            ?>
+                                <div class='alert alert-warning'>
+                                    Log in to make the payment.
+                                </div>
+                            <?php
+                                else:
+                            ?>
+                                <input type="hidden" name="totalQuantityCart" value="<?= $totalQuantityCart ?>">
+                                <input type="hidden" name="totalPriceCart" value="<?= $totalPriceCart ?>">
+                                <?php
+                                    if(isset($_SESSION['cart'])):
+                                ?>
+                                    <button type="submit" class="btn btn-primary checkout-btn">Checkout</button>
+                            <?php
+                                endif;
+                                endif;
+                            ?>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-4">
-            <div class="card shadow">
-                <div class="card-body">
-                    <h2 class="card-title">Cart Summary</h2>
-                    <div class="item-info">
-                        <h5>Item 1</h5>
-                        <span>Price: $10</span>
-                        <span>Quantity: 2</span>
-                    </div>
-                    <div class="item-info">
-                        <h5>Item 2</h5>
-                        <span>Price: $20</span>
-                        <span>Quantity: 1</span>
-                    </div>
-                    <div class="item-info">
-                        <h5>Item 3</h5>
-                        <span>Price: $15</span>
-                        <span>Quantity: 3</span>
-                    </div>
-                    <div class="item-info">
-                        <h5>Total Items: 6</h5>
-                        <h5>Total Price: $95</h5>
-                    </div>
-                    <a href="payment.php" class="btn btn-primary checkout-btn">Checkout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
-
-
-    <!-- Restante do conteúdo da página -->
+    </main>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

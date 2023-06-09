@@ -54,10 +54,10 @@
             array_push($error, 'The stock value has to be greater than 0.');
 
         if(!Validation::validateExpirationDate($expirationDate))
-        array_push($error, 'The expiration date is invalid as this product has expired.');
+            array_push($error, 'The expiration date is invalid as this product has expired.');
         
         if(!Validation::validateProductionDate($productionDate))
-        array_push($error, 'The production date is invalid as it has not yet occurred.');
+            array_push($error, 'The production date is invalid as it has not yet occurred.');
 
         if(!Validation::validateComments($comments))
             array_push($error, 'Invalid comment, the comment can only have up to 45 characters.');
@@ -70,6 +70,7 @@
 
         if($error)
             Uteis::redirect(message: $error, session_name: 'msg_error_validation');
+        // echo 'here' or die;
 
         $product = new ProductModel(
             name: $name,

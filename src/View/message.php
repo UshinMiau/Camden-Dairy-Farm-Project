@@ -1,38 +1,37 @@
 <?php
-session_start();
+    session_start();
 
-if (!isset($_SESSION)) {
-    header('Location: ../../index.php');
-    exit();
-}
+    if (!isset($_SESSION)) {
+        header('Location: ../../index.php');
+        exit();
+    }
 
-var_dump($_SESSION);
-unset($_SESSION);
+    var_dump($_SESSION);
 
-die;
+    die;
 
-$_SESSION['message'] = array(
-    array(
-        'type' => 'danger',
-        'content' => 'This is a danger message'
-    ),
-    array(
-        'type' => 'info',
-        'content' => 'This is a info message'
-    ),
-    array(
-        'type' => 'success',
-        'content' => 'This is a success message'
-    ),
-    array(
-        'type' => 'warning',
-        'content' => 'This is a warning message'
-    ),
-);
-if (!isset($_SESSION['message'])) {
-    header('Location: ../index.html');
-    exit();
-}
+    $_SESSION['message'] = array(
+        array(
+            'type' => 'danger',
+            'content' => 'This is a danger message'
+        ),
+        array(
+            'type' => 'info',
+            'content' => 'This is a info message'
+        ),
+        array(
+            'type' => 'success',
+            'content' => 'This is a success message'
+        ),
+        array(
+            'type' => 'warning',
+            'content' => 'This is a warning message'
+        ),
+    );
+    if (!isset($_SESSION['message'])) {
+        header('Location: ../index.html');
+        exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">

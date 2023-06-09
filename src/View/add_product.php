@@ -110,17 +110,15 @@
                         </div>
                     </div>
                     <div class="col-12">
-                        <a href="" class="btn btn-block btn-primary" type="submit">
+                        <button class="btn btn-block btn-primary" type="submit">
                             <i class="bi bi-plus"></i> Add Product
-                        </a>
+                        </button>
                     </div>
                 </form>
 
             </div>
         </div>
     </main>
-
-    <!-- TODO: SCRIPT PARA VALIDAR -->
 </body>
 
 </html>

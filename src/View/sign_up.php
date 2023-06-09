@@ -179,8 +179,6 @@
             </div>
         </div>
     </main>
-
-
     
     <script>
         function validateForm() {

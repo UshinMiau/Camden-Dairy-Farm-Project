@@ -61,12 +61,26 @@
             </div>
         </nav>
     </header>
-
+    
     <main>
-
+        <div class="container w-50 vh-100 d-flex flex-column justify-content-center align-content-center">
+            <div class="d-flex flex-column justify-content-center align-items-center card p-5 shadow">
+                <h1 class="text-center my-4">Your account</h1>
+                <div>
+                    <p><b>Client Id: </b><?= $_SESSION['client']['client_id'] ?></p>
+                    <p><b>Full Name: </b><?= $_SESSION['client']['fullname'] ?></p>
+                    <p><b>Phone Number: </b><?= $_SESSION['client']['phone_number'] ?></p>
+                    <p><b>Address Id: </b><?= $_SESSION['client']['address_id'] ?></p>
+                    <p><b>E-Mail: </b><?= $_SESSION['client']['email'] ?></p>
+                </div>
+                <div>
+                    <a class="btn btn-block btn-danger" href="../Controller/Login.php?operation=sign_out">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
     </main>
-
-    <!-- TODO: SCRIPT PARA VALIDAR -->
 </body>
 
 </html>
