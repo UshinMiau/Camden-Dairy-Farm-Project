@@ -1,62 +1,11 @@
 <?php
+
     session_start();
 
     if (!isset($_SESSION)) {
         header('Location: ../../index.php');
         exit();
     }
-
-    var_dump($_SESSION);
-
-    die;
-
-    $_SESSION['message'] = array(
-        array(
-            'type' => 'danger',
-            'content' => 'This is a danger message'
-        ),
-        array(
-            'type' => 'info',
-            'content' => 'This is a info message'
-        ),
-        array(
-            'type' => 'success',
-            'content' => 'This is a success message'
-        ),
-        array(
-            'type' => 'warning',
-            'content' => 'This is a warning message'
-        ),
-    );
-    if (!isset($_SESSION['message'])) {
-        header('Location: ../index.html');
-        exit();
-    }
-?>
-
-    <main>
-        <div class="container w-50 vh-100 d-flex flex-column justify-content-center align-content-center">
-            <div class="d-flex flex-column justify-content-center align-items-center card p-5 shadow">
-                <h1 class="text-center my-4"><i class="bi bi-cone"></i> Attention</h1>
-                <?php
-                if (is_array($_SESSION['message'])) {
-                    foreach ($_SESSION['message'] as $message) {
-                        echo "<div class='alert alert-{$message["type"]}'>{$message["content"]}</div>";
-                    }
-                    unset($_SESSION['message']);
-                } else {
-                    echo "<div class='alert alert-info'>{$_SESSION['message']}</div>";
-                }
-                ?>
-            </div>
-        </div>
-    </main>
-
-
-    
-<?php
-
-    session_start();
 
     if (isset($_SESSION['adm']) || isset($_SESSION['client'])) {
         $login = true;
@@ -185,100 +134,44 @@
 
     <br>
 
-    <main class="container">
-        <div class="row">
-            <div class="col-md-8">
+    <main>
+        <div class="container w-50 vh-100 d-flex flex-column justify-content-center align-content-center">
+            <div class="d-flex flex-column justify-content-center align-items-center card p-5 shadow">
+                <h1 class="text-center my-4"><i class="bi bi-cone"></i> Attention</h1>
                 <?php
-                    if(!isset($_SESSION['cart'])):
+                function displayAlert($type, $message)
+                {
+                    if (is_array($message)) {
+                        $message = implode("<br>", $message);
+                    }
+                    
+                    echo "<div class='alert alert-{$type}'>{$message}</div>";
+                }
+                
+                if (isset($_SESSION['danger'])) {
+                    displayAlert('danger', $_SESSION['danger']);
+                    unset($_SESSION['danger']);
+                }
+                
+                if (isset($_SESSION['info'])) {
+                    displayAlert('info', $_SESSION['info']);
+                    unset($_SESSION['info']);
+                }
+                
+                if (isset($_SESSION['warning'])) {
+                    displayAlert('warning', $_SESSION['warning']);
+                    unset($_SESSION['warning']);
+                }
+                
+                if (isset($_SESSION['success'])) {
+                    displayAlert('success', $_SESSION['success']);
+                    unset($_SESSION['success']);
+                }
                 ?>
-
-                    <h2>Empty shopping cart!</h2>
-
-                <?php
-                    else:
-                        foreach($_SESSION['cart'] as $item):
-                            $name = $item['product']['name'];
-                            $quantity = $item['quantity'];
-                            $price = $item['product']['price_of_sale'];
-                            $totalPrice = $price * $quantity;
-
-                            if(!isset($totalPriceCart) && !isset($totalQuantityCart)) {
-                                $totalPriceCart = $totalPrice;
-                                $totalQuantityCart = $quantity;
-                            }
-                            else {
-                                $totalPriceCart = $totalPriceCart + $totalPrice;
-                                $totalQuantityCart = $totalQuantityCart + $quantity;
-                            }
-                ?>
-                        <div class="card mb-3">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="imgs/img.png" alt="" class="card-img-top" style="max-height: 140px; object-fit: contain;">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h3 class="card-title"><?= $name ?></h3>
-                                        <p class="card-text">Price: $<?= $price ?></p>
-                                        <p class="card-text">Quantity: <?= $quantity ?></p>
-                                        <p class="card-text">Total price: $<?= $totalPrice ?></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                <?php
-                    endforeach;
-                ?>
-                    <a class="btn btn-block btn-danger" href="../Controller/clear_cart.php">
-                        <i class="bi bi-trash"></i> Clear
-                    </a>
-                <?php
-                    endif;
-                ?>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <form method="POST" action="../Controller/Payment.php?operation=pay">
-                            <h2 class="card-title">Cart Summary</h2>
-                            <div class="item-info">
-                            <?php
-                                if(!isset($_SESSION['cart'])):
-                            ?>
-                                <h5>Empty shopping cart!</h5>
-                            <?php
-                                else:
-                            ?>
-                                <h5>Total Items: <?= $totalQuantityCart ?></h5>
-                                <h5>Total Price: $<?= $totalPriceCart ?></h5>
-                            </div>
-                            <?php
-                                endif;
-                                if(!$login):
-                            ?>
-                                <div class='alert alert-warning'>
-                                    Log in to make the payment.
-                                </div>
-                            <?php
-                                else:
-                            ?>
-                                <input type="hidden" name="totalQuantityCart" value="<?= $totalQuantityCart ?>">
-                                <input type="hidden" name="totalPriceCart" value="<?= $totalPriceCart ?>">
-                                <?php
-                                    if(isset($_SESSION['cart'])):
-                                ?>
-                                    <button type="submit" class="btn btn-primary checkout-btn">Checkout</button>
-                            <?php
-                                endif;
-                                endif;
-                            ?>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
     </main>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
