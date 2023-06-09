@@ -12,7 +12,7 @@
     session_start();
 
     if(empty($_POST) && empty($_GET)) {
-        Uteis::redirect(message: 'Invalid request!');
+        Uteis::redirect(message: 'Invalid request!', session_name: 'danger');
     }
 
     switch($_GET['operation']) {
@@ -33,7 +33,7 @@
             break;
 
         default:
-            Uteis::redirect(message: 'Operation not reported.');
+            Uteis::redirect(message: 'Operation not reported.', session_name: 'danger');
     }
 
     function registerProduct() {
@@ -69,8 +69,7 @@
             array_push($error, "Invalid price of production cost.");
 
         if($error)
-            Uteis::redirect(message: $error, session_name: 'msg_error_validation');
-        // echo 'here' or die;
+            Uteis::redirect(message: $error, session_name: 'warning');
 
         $product = new ProductModel(
             name: $name,
@@ -85,10 +84,10 @@
         $result = ProductDAO::register($product);
         
         if($result) {
-            Uteis::redirect(message: 'Product successfully registered!!', session_name: 'msg_confirm');
+            Uteis::redirect(message: 'Product successfully registered!!', session_name: 'success');
         }
         else {
-            Uteis::redirect(message: 'Sorry, it was not possible to register the product!!');
+            Uteis::redirect(message: 'Sorry, it was not possible to register the product!!', session_name: 'danger');
         }
     }
 
@@ -99,13 +98,13 @@
             Uteis::redirect(message: $products, session_name: "list_of_products", url: "../../index.php");
         }
         else {
-            Uteis::redirect(message: "No products registered at the moment!!");
+            Uteis::redirect(message: "No products registered at the moment!!", session_name: 'info');
         }
     }
 
     function findProduct() {
         if(empty($_GET['id'])) {
-            Uteis::redirect("Product code not informed!!");
+            Uteis::redirect("Product code not informed!!", session_name: 'danger');
         }
 
         $product = ProductDAO::findProductId($_GET['id']);
@@ -114,13 +113,13 @@
             Uteis::redirect(message: $product, session_name: "data_product", url: '../View/product.php');
         }
         else {
-            Uteis::redirect("Product not found!!");
+            Uteis::redirect("Product not found!!", session_name: 'danger');
         }
     }
 
     function addCart() {
         if (empty($_GET['product'])) {
-            Uteis::redirect("Product not informed!!");
+            Uteis::redirect("Product not informed!!", session_name: 'danger');
         }
         else {
             if (!isset($_SESSION['cart'])) {

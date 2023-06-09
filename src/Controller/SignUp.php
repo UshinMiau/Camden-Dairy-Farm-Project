@@ -16,11 +16,11 @@
     session_start();
 
     if(empty($_POST) && empty($_GET)) {
-        Uteis::redirect(message: 'Invalid request!');
+        Uteis::redirect(message: 'Invalid request!', session_name: 'danger');
     }
 
     if($_GET['operation'] !== 'sign_up') {
-        Uteis::redirect(message: 'The operation entered is not correct.');
+        Uteis::redirect(message: 'The operation entered is not correct.', session_name: 'danger');
     }
     
     $error = array();
@@ -40,7 +40,7 @@
         array_push($error, "Invalid neighborhood name.");
         
     if($error)
-        Uteis::redirect(message: $error, session_name: 'msg_error_validation');
+        Uteis::redirect(message: $error, session_name: 'warning');
 
     $address = new AddressModel(
         streetName: $streetName,
@@ -66,7 +66,7 @@
         array_push($error, 'Invalid email.');
 
     if($error)
-        Uteis::redirect(message: $error, session_name: 'msg_error_validation');
+        Uteis::redirect(message: $error, session_name: 'warning');
 
     $client = new ClientModel(
         fullName: $fullName,
@@ -82,7 +82,7 @@
         array_push($error, 'Invalid password.');
 
     if($error)
-        Uteis::redirect(message: $error, session_name: 'msg_error_validation');
+        Uteis::redirect(message: $error, session_name: 'warning');
 
     $user = new UserModel(
         username: $username,
@@ -100,21 +100,21 @@
             $resultUser = UserDAO::sign_up($user);
 
             if($resultUser) {
-                Uteis::redirect(message: 'Account successfully registered!!', session_name: 'msg_confirm');
+                Uteis::redirect(message: 'Account successfully registered!!', session_name: 'success');
             }
             else {
                 AddressDAO::remove($address->addressId);
                 ClientDAO::remove($client->clientId);
-                Uteis::redirect(message: 'Sorry, it was not possible to register the account!!');
+                Uteis::redirect(message: 'Sorry, it was not possible to register the account!!', session_name: 'danger');
             }
         }
         else {
             AddressDAO::remove($adrressId);
-            Uteis::redirect(message: 'Sorry, it was not possible to register the account!!');
+            Uteis::redirect(message: 'Sorry, it was not possible to register the account!!', session_name: 'danger');
         }
     }
     else {
-        Uteis::redirect(message: 'Sorry, it was not possible to register the account!!');
+        Uteis::redirect(message: 'Sorry, it was not possible to register the account!!', session_name: 'danger');
     }
 
 ?>

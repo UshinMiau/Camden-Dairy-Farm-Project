@@ -11,11 +11,11 @@
     session_start();
 
     if(empty($_POST) && empty($_GET)) {
-        Uteis::redirect(message: 'Invalid request!');
+        Uteis::redirect(message: 'Invalid request!', session_name: 'danger');
     }
 
     if(empty($_GET['operation'])) {
-        Uteis::redirect(message: 'Operation does not master. Please let her know!');
+        Uteis::redirect(message: 'Operation does not master. Please let her know!', session_name: 'danger');
     }
     
     switch ($_GET['operation']) {
@@ -28,7 +28,7 @@
             break;
         
         default:
-            Uteis::redirect(message: 'The operation entered is not correct.');
+            Uteis::redirect(message: 'The operation entered is not correct.', session_name: 'danger');
     }
 
     function signIn() {
@@ -46,7 +46,7 @@
                         die;
                     }
                     else {
-                        Uteis::redirect('Error finding customer data.');
+                        Uteis::redirect('Error finding customer data.', session_name: 'danger');
                     }
                 }
                 else {
@@ -57,7 +57,7 @@
             }
         }
         else {
-            Uteis::redirect(message: 'Non-existent record!');
+            Uteis::redirect(message: 'Non-existent record!', session_name: 'danger');
         }
     }
     function signOut() {

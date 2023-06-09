@@ -11,7 +11,7 @@
     session_start();
 
     if(empty($_POST) && empty($_GET)) {
-        Uteis::redirect(message: 'Invalid request!');
+        Uteis::redirect(message: 'Invalid request!', session_name: 'danger');
     }
 
     switch($_GET['operation']) {
@@ -24,7 +24,7 @@
             break;
 
         default:
-            Uteis::redirect(message: 'Operation not reported.');
+            Uteis::redirect(message: 'Operation not reported.', session_name: 'danger');
     }
 
 
@@ -49,10 +49,10 @@
         $result = PaymentDAO::register($summary);
 
         if($result) {
-            Uteis::redirect(message: 'Successful payment!', session_name: 'msg_confirm');
+            Uteis::redirect(message: 'Successful payment!', session_name: 'success');
         }
         else {
-            Uteis::redirect(message: 'Error when making payment!', session_name: 'msg_error');
+            Uteis::redirect(message: 'Error when making payment!', session_name: 'danger');
         }
     }
 ?>
