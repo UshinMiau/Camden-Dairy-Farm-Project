@@ -1,6 +1,16 @@
 <?php
 session_start();
-// TODO REMOVE THIS - IS A EXEMPLE
+
+if (!isset($_SESSION)) {
+    header('Location: ../../index.php');
+    exit();
+}
+
+var_dump($_SESSION);
+unset($_SESSION);
+
+die;
+
 $_SESSION['message'] = array(
     array(
         'type' => 'danger',

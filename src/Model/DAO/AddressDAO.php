@@ -11,7 +11,7 @@
 
         public static function sign_up(AddressModel $address) {
             self::$connection = Connection::getConnection();
-            $sql = "INSERT INTO address (address_id, street_name, street_number, neighbourhood, city) VALUES ('" . $address->addressId . "', '" . $address->streetName . "', '" . $address->numberOfStreet . "', '" . $address->neighbourhood . "', '" . $address->city . "')";
+            $sql = "INSERT INTO address (address_id, street_name, street_number, neighborhood, city) VALUES ('" . $address->addressId . "', '" . $address->streetName . "', '" . $address->numberOfStreet . "', '" . $address->neighborhood . "', '" . $address->city . "')";
             $statement = self::$connection->prepare($sql);
 
             return $statement->execute();
@@ -45,7 +45,7 @@
 
         public static function update(AddressModel $address) {
             self::$connection = Connection::getConnection();
-            $sql = "UPDATE address SET street_name = '" . $address->streetName . "', street_number = '" . $address->numberOfStreet . "', neighbourhood = '" . $address->neighbourhood . "', city = '" . $address->city . "' WHERE address_id = '" . $address->addressId . "'";
+            $sql = "UPDATE address SET street_name = '" . $address->streetName . "', street_number = '" . $address->numberOfStreet . "', neighborhood = '" . $address->neighborhood . "', city = '" . $address->city . "' WHERE address_id = '" . $address->addressId . "'";
             $statement = self::$connection->prepare($sql);
 
             return $statement->execute();

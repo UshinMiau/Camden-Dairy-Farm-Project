@@ -6,19 +6,19 @@
         private $addressId;
         private $streetName;
         private $numberOfStreet;
-        private $neighbouhood;
+        private $neighborhood;
         private $city;
 
         public function __construct(
             $streetName,
             $numberOfStreet,
-            $neighbouhood,
+            $neighborhood,
             $city,
             $addressId = null
         ) {
             $this->streetName = $streetName;
             $this->numberOfStreet = $numberOfStreet;
-            $this->neighbouhood = $neighbouhood;
+            $this->neighborhood = $neighborhood;
             $this->city = $city;
             $this->addressId = uniqid('address', true);
         }

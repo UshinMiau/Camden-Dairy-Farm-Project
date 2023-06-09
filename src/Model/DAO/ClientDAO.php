@@ -3,62 +3,63 @@
     namespace APP\Model\DAO;
 
     use APP\Model\Connection;
-    use APP\Model\UserModel;
+    use APP\Model\ClientModel;
     use PDO;
 
-    class UserDAO {
+    class ClientDAO {
         private static PDO $connection;
 
-        public static function sign_up(UserModel $user) {
+        public static function sign_up(ClientModel $client) {
             self::$connection = Connection::getConnection();
-            $sql = "INSERT INTO users(user_id, username, email, password, created_at) VALUES ('" . $user->userId . "', '" . $user->username . "', '" . $user->email . "', '" . $user->password . "', '" . $user->createdAt . "')";
+            $sql = "INSERT INTO client (client_id, fullname, phone_number, address_id, email) VALUES ('" . $client->clientId . "', '" . $client->fullName . "', '" . $client->phoneNumber . "', '" . $client->addressOfShipping . "', '" . $client->email . "')";
             $statement = self::$connection->prepare($sql);
-
+        
             return $statement->execute();
         }
-
+        
         public static function findAll(): array {
             self::$connection = Connection::getConnection();
-            $sql = "SELECT * FROM users";
+            $sql = "SELECT * FROM client";
             $statement = self::$connection->prepare($sql);
             $statement->execute();
-
+        
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
-
-        public static function remove(string $userId): bool {
+        
+        public static function remove(string $clientId): bool {
             self::$connection = Connection::getConnection();
-            $sql = "DELETE FROM users WHERE user_id = '" . $userId . "'";
+            $sql = "DELETE FROM client WHERE client_id = '" . $clientId . "'";
             $statement = self::$connection->prepare($sql);
-
+        
             return $statement->execute();
         }
-
-        public static function findUser(string $username) {
+        
+        public static function findClient(string $login) {
             self::$connection = Connection::getConnection();
-            $sql = "SELECT * FROM users WHERE username = '" . $username . "'";
+            $sql = "SELECT * FROM client WHERE email = '" . $login . "'";
             $statement = self::$connection->prepare($sql);
             $statement->execute();
-
+        
             return $statement->fetch(PDO::FETCH_ASSOC);
         }
-
-        public static function findUserId(string $userId) {
+        
+        public static function findClientId(string $clientId) {
             self::$connection = Connection::getConnection();
-            $sql = "SELECT * FROM users WHERE user_id = '" . $userId . "'";
+            $sql = "SELECT * FROM client WHERE client_id = '" . $clientId . "'";
             $statement = self::$connection->prepare($sql);
             $statement->execute();
-
+        
             return $statement->fetch(PDO::FETCH_ASSOC);
         }
-
-        public static function update(UserModel $user) {
+        
+        public static function update(ClientModel $client) {
             self::$connection = Connection::getConnection();
-            $sql = "UPDATE users SET username = '" . $user->username . "', email = '" . $user->email . "', password = '" . $user->password . "', created_at = '" . $user->createdAt . "' WHERE user_id = '" . $user->userId . "'";
+            $sql = "UPDATE client SET fullname = '" . $client->fullName . "', phone_number = '" . $client->phoneNumber . "', address_id = '" . $client->addressOfShipping . "' WHERE client_id = '" . $client->clientId . "'";
             $statement = self::$connection->prepare($sql);
-
+        
             return $statement->execute();
         }
+        
     }
 
 ?>

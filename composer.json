@@ -1,5 +1,5 @@
 {
-    "name": "candem/dairyhighlights",
+    "name": "app/farm",
     "autoload": {
         "psr-4": {
             "APP\\": "src/"
@@ -8,5 +8,7 @@
             "config.php"
         ]
     },
-    "require": {}
+    "require": {
+
+    }
 }

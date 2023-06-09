@@ -4,12 +4,7 @@
     
     class Validation {
         public static function validateFullName($fullName) {
-            $fullName = trim($fullName);
-
-            if (!preg_match("/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/u", $fullName)) {
-                return false;
-            }
-            else if(count(explode(' ', $fullName)) < 2){
+            if (!preg_match("/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/u", trim($fullName)) && !count(explode(' ', $fullName)) >= 2) {
                 return false;
             }
             else {
@@ -18,7 +13,7 @@
         }
         
         public static function validatePrice($price) {
-            return preg_match("/^\d{1,3}(?:\.\d{3})*(?:,\d{2})?$/", $price);
+            return preg_match("/^\d+(\.\d+)?$/", $price);
         }
 
         public static function validateUsernameAndPassword($usernameOrPassword) {
@@ -26,12 +21,16 @@
         }
 
         public static function validateString($string) {
-            return preg_match("/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/u", $string);
+            return preg_match("/^[A-Za-zÀ-ÖØ-öø-ÿ\s]*$/u", $string);
         }
 
         public static function validatePhone($phoneNumber) {
             $length = strlen($phoneNumber);
-            return $length == 11 || $length == 8 || $length == 9 ? true : false;
+            
+            if($length == 11 || $length == 8 || $length == 9)
+                return true;
+            else
+                return false;
         }
 
         public static function validateDate($date) {
@@ -48,7 +47,7 @@
 
         public static function validateNumber($number) {
             return ctype_digit($number);
-        }
+        }        
 
         public static function validateStock($stock) {
             return $stock > 0;
