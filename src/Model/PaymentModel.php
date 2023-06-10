@@ -24,7 +24,7 @@
             $this->paymentDate = $paymentDate;
             $this->totalQuantityCart = $totalQuantityCart;
             $this->totalPriceWithoutDiscount = $totalPriceWithoutDiscount;
-            $this->paymentMethod = 'pix';
+            $this->paymentMethod = 'payid';
             $this->quotationDiscountValue = $this->calculateDiscount($this->totalQuantityCart);
             $this->totalPriceWithDiscount = $this->totalPriceWithoutDiscount - ($this->totalPriceWithoutDiscount * $this->quotationDiscountValue / 100);
             $this->paymentId = uniqid('payment', true);
