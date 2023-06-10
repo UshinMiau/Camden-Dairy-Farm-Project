@@ -1,13 +1,12 @@
 <?php
 
-    session_start();
+session_start();
 
-    if (isset($_SESSION['adm']) || isset($_SESSION['client'])) {
-        $login = true;
-    }
-    else {
-        $login = false;
-    }
+if (isset($_SESSION['adm']) || isset($_SESSION['client'])) {
+    $login = true;
+} else {
+    $login = false;
+}
 
 ?>
 
@@ -84,36 +83,34 @@
                 <div class="d-flex align-items-center">
                     <a class="navbar-brand logo" href="../../index.php">Camden Dairy Farm</a>
                 </div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
+                        <li class="nav-item">
                             <?php
-                                if(!$login):
+                            if (!$login) :
                             ?>
                                 <a class="nav-link" href="login.php">
                                     <i class="bi bi-person"></i> Login
                                 </a>
-                            <?php
-                                else:
-                                    if(isset($_SESSION['adm'])):
-                            ?>
+                                <?php
+                            else :
+                                if (isset($_SESSION['adm'])) :
+                                ?>
                                     <a class="nav-link" href="adm.php">
                                         <i class="bi bi-person"></i> Adm Panel
                                     </a>
                                 <?php
-                                    else:
+                                else :
                                 ?>
                                     <a class="nav-link" href="client.php">
                                         <i class="bi bi-person"></i> Client Panel
                                     </a>
                             <?php
                                 endif;
-                                endif;
+                            endif;
                             ?>
                         </li>
                         <li class="nav-item">
@@ -133,28 +130,27 @@
         <div class="row">
             <div class="col-md-8">
                 <?php
-                    if(!isset($_SESSION['cart'])):
+                if (!isset($_SESSION['cart'])) :
                 ?>
 
                     <h2>Empty shopping cart!</h2>
 
-                <?php
-                    else:
-                        foreach($_SESSION['cart'] as $item):
-                            $name = $item['product']['name'];
-                            $quantity = $item['quantity'];
-                            $price = $item['product']['price_of_sale'];
-                            $totalPrice = $price * $quantity;
+                    <?php
+                else :
+                    foreach ($_SESSION['cart'] as $item) :
+                        $name = $item['product']['name'];
+                        $quantity = $item['quantity'];
+                        $price = $item['product']['price_of_sale'];
+                        $totalPrice = $price * $quantity;
 
-                            if(!isset($totalPriceCart) && !isset($totalQuantityCart)) {
-                                $totalPriceCart = $totalPrice;
-                                $totalQuantityCart = $quantity;
-                            }
-                            else {
-                                $totalPriceCart = $totalPriceCart + $totalPrice;
-                                $totalQuantityCart = $totalQuantityCart + $quantity;
-                            }
-                ?>
+                        if (!isset($totalPriceCart) && !isset($totalQuantityCart)) {
+                            $totalPriceCart = $totalPrice;
+                            $totalQuantityCart = $quantity;
+                        } else {
+                            $totalPriceCart = $totalPriceCart + $totalPrice;
+                            $totalQuantityCart = $totalQuantityCart + $quantity;
+                        }
+                    ?>
                         <div class="card mb-3">
                             <div class="row g-0">
                                 <div class="col-md-4">
@@ -170,14 +166,14 @@
                                 </div>
                             </div>
                         </div>
-                <?php
+                    <?php
                     endforeach;
-                ?>
+                    ?>
                     <a class="btn btn-block btn-danger" href="../Controller/clear_cart.php">
                         <i class="bi bi-trash"></i> Clear
                     </a>
                 <?php
-                    endif;
+                endif;
                 ?>
             </div>
 
@@ -187,36 +183,37 @@
                         <form method="POST" action="../Controller/Payment.php?operation=pay">
                             <h2 class="card-title">Cart Summary</h2>
                             <div class="item-info">
-                            <?php
-                                if(!isset($_SESSION['cart'])):
-                            ?>
-                                <h5>Empty shopping cart!</h5>
-                            <?php
-                                else:
-                            ?>
-                                <h5>Total Items: <?= $totalQuantityCart ?></h5>
-                                <h5>Total Price: $<?= $totalPriceCart ?></h5>
+                                <?php
+                                if (!isset($_SESSION['cart'])) :
+                                ?>
+                                    <h5>Empty shopping cart!</h5>
+                                <?php
+                                else :
+                                ?>
+                                    <h5>Total Items: <?= $totalQuantityCart ?></h5>
+                                    <h5>Total Price: $<?= $totalPriceCart ?></h5>
                             </div>
-                            <?php
+                        <?php
                                 endif;
-                                if(!$login):
-                            ?>
-                                <div class='alert alert-warning'>
-                                    Log in to make the payment.
-                                </div>
+                                if (!$login) :
+                        ?>
+                            <div class='alert alert-warning'>
+                                Log in to make the payment.
+                            </div>
+                        <?php
+                                else :
+                        ?>
+
                             <?php
-                                else:
+                                    if (isset($_SESSION['cart'])) :
                             ?>
                                 <input type="hidden" name="totalQuantityCart" value="<?= $totalQuantityCart ?>">
                                 <input type="hidden" name="totalPriceCart" value="<?= $totalPriceCart ?>">
-                                <?php
-                                    if(isset($_SESSION['cart'])):
-                                ?>
-                                    <button type="submit" class="btn btn-primary checkout-btn">Checkout</button>
-                            <?php
+                                <button type="submit" class="btn btn-primary checkout-btn">Checkout</button>
+                        <?php
+                                    endif;
                                 endif;
-                                endif;
-                            ?>
+                        ?>
                         </form>
                     </div>
                 </div>

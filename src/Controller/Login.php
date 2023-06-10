@@ -54,6 +54,8 @@
                     header('location: ../../index.php');
                     die;
                 }
+            }else{
+                Uteis::redirect(message: 'Invalid password!', session_name: 'warning');
             }
         }
         else {
@@ -68,5 +70,3 @@
     function matchPassword($password, $result) {
         return password_verify($password, $result);
     }
-
-?>

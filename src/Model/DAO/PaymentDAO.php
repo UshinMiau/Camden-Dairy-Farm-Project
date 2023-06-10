@@ -17,9 +17,3 @@
             return $statement->execute();
         }
     }
-?>
-
-
-
-
-

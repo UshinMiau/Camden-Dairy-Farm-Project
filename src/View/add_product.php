@@ -1,11 +1,11 @@
 <?php
 
-    session_start();
+session_start();
 
-    if(!isset($_SESSION['adm'])) {
-        header('location: ../../index.php');
-        die;
-    }
+if (!isset($_SESSION['adm'])) {
+    header('location: ../../index.php');
+    die;
+}
 
 ?>
 
@@ -87,14 +87,14 @@
                     </div>
                     <div class="col-12">
                         <div class="input-group">
-                            <span class="input-group-text" id="expirationDate"><i class="bi bi-calendar-x"></i></span>
-                            <input type="date" class="form-control" placeholder="Expiration Date" aria-label="Expiration Date" aria-describedby="expirationDate" aria-required="true" required name="expirationDate" />
+                            <span class="input-group-text" id="productionDate"><i class="bi bi-calendar-check"></i></span>
+                            <input type="date" class="form-control" placeholder="Production Date" aria-label="Production Date" aria-describedby="productionDate" aria-required="true" required name="productionDate" />
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="input-group">
-                            <span class="input-group-text" id="productionDate"><i class="bi bi-calendar-check"></i></span>
-                            <input type="date" class="form-control" placeholder="Production Date" aria-label="Production Date" aria-describedby="productionDate" aria-required="true" required name="productionDate" />
+                            <span class="input-group-text" id="expirationDate"><i class="bi bi-calendar-x"></i></span>
+                            <input type="date" class="form-control" placeholder="Expiration Date" aria-label="Expiration Date" aria-describedby="expirationDate" aria-required="true" required name="expirationDate" />
                         </div>
                     </div>
                     <div class="col-12">
